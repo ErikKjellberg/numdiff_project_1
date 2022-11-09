@@ -24,7 +24,6 @@ def plot_with_solution(timegrid, approx, solution):
 
 
 def plot_with_error(timegrid, approx, error):
-    print(timegrid, approx, error)
     n, N = approx.shape
     plt.figure(1)
     for i in range(n):
