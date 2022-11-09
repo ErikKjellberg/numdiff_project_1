@@ -58,12 +58,12 @@ def adaptiveRK34(f, y0, t0, tf, tol=1e-10):
     return np.array(timegrid), np.array(approx).transpose(), np.array(lerror)
 
 
-A = np.array([[-10, -1], [0, -1]])
-f = lambda t, y: np.dot(A, y)
-y0 = np.array([1, 1])
-t0 = 0
-tf = 1
-N = 1000
-timegrid, approx, lerror = adaptiveRK34(f, y0, t0, tf, tol=1e-3)
-plot_with_error(timegrid, approx, [np.linalg.norm(l) for l in lerror.transpose()])
-plt.show()
+# A = np.array([[-10, -1], [0, -1]])
+# f = lambda t, y: np.dot(A, y)
+# y0 = np.array([1, 1])
+# t0 = 0
+# tf = 1
+# N = 1000
+# timegrid, approx, lerror = adaptiveRK34(f, y0, t0, tf, tol=1e-3)
+# plot_with_error(timegrid, approx, [np.linalg.norm(l) for l in lerror.transpose()])
+# plt.show()
