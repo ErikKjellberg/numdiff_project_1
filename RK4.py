@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy import linalg
 
 from utils import plot_with_solution, test_equation
 
@@ -34,7 +33,7 @@ tf = 1
 N = 100
 timegrid, approx = RK4solver(f, y0, t0, tf, N)
 timegrid, sol = test_equation(A, y0, t0, tf, N)
-plot(
+plot_with_solution(
     timegrid,
     approx,
     [np.linalg.norm(a - s) for a, s in zip(approx.transpose(), sol.transpose())],
