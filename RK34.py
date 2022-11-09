@@ -2,7 +2,6 @@ from math import pow
 
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy import linalg
 
 from utils import plot_with_error
 
@@ -14,7 +13,7 @@ def RK34step(f, told, yold, h):
     Y_4 = f(told + h, yold + h * Y_3)
     Z_3 = f(told + h, yold - h * Y_1 + 2 * h * Y_2)
     ynew = yold + h / 6 * (Y_1 + 2 * Y_2 + 2 * Y_3 + Y_4)
-    lnew = yold + h / 6 * (2 * Y_2 + Z_3 - 2 * Y_3 - Y_4)
+    lnew = h / 6 * (2 * Y_2 + Z_3 - 2 * Y_3 - Y_4)
     return ynew, lnew
 
 
@@ -37,7 +36,7 @@ def RK34(f, y0, t0, tf, N):
     return timegrid, approx, lerror
 
 
-def adaptiveRK34(f, y0, t0, tf, tol=10 ** (-6)):
+def adaptiveRK34(f, y0, t0, tf, tol=1e-10):
     y = y0
     approx = [y0]
     lerror = [0]
@@ -56,7 +55,7 @@ def adaptiveRK34(f, y0, t0, tf, tol=10 ** (-6)):
         timegrid.append(t)
         h = newage(tol, r, rold, h, 4)
         rold = r
-    return np.array(timegrid), np.array(approx), np.array(lerror)
+    return np.array(timegrid), np.array(approx).transpose(), np.array(lerror)
 
 
 A = np.array([[-10, -1], [0, -1]])
@@ -64,7 +63,7 @@ f = lambda t, y: np.dot(A, y)
 y0 = np.array([1, 1])
 t0 = 0
 tf = 1
-N = 100
-timegrid, approx, lerror = adaptiveRK34(f, y0, t0, tf, N)
+N = 1000
+timegrid, approx, lerror = adaptiveRK34(f, y0, t0, tf, tol=1e-3)
 plot_with_error(timegrid, approx, [np.linalg.norm(l) for l in lerror.transpose()])
 plt.show()
